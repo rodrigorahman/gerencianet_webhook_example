@@ -27,11 +27,11 @@ void main(List<String> args) async {
   }
 
   var router = Router();
-  router.post('/webhook/', (shelf.Request request){
+  router.post('/webhook/', (shelf.Request request) async {
 
     print(request.requestedUri.hasAuthority);
     print(request.headers);
-    print(request.readAsString());
+    print(await request.readAsString());
     if(!request.headers.containsKey('Authorization')) {
       return shelf.Response(401);
     }else {
