@@ -31,7 +31,7 @@ void main(List<String> args) async {
 
     print(request.requestedUri.hasAuthority);
     print(request.headers);
-    if(!request.requestedUri.hasAuthority) {
+    if(!request.headers.containsKey('Authorization')) {
       return shelf.Response(401);
     }else {
       return shelf.Response(200);
