@@ -62,7 +62,7 @@ void main(List<String> args) async {
       '/etc/letsencrypt/live/gerencianetpoc.academiadoflutter.com.br/fullchain.pem');
   serverSecurityContext.usePrivateKey(
       '/etc/letsencrypt/live/gerencianetpoc.academiadoflutter.com.br/privkey.pem');
-  serverSecurityContext.setTrustedCertificates('$root/bin/chain-pix-prod.crt');
+  serverSecurityContext.setClientAuthorities('$root/bin/chain-pix-prod.crt');
   serverSecurityContext.setAlpnProtocols(['TLSv1.2'], true);
   
   final server = await io.serve(handler, _hostname, port,
