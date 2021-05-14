@@ -65,8 +65,18 @@ void main(List<String> args) async {
   serverSecurityContext.setClientAuthorities('$root/bin/chain-pix-prod.crt');
   serverSecurityContext.setAlpnProtocols(['TLSv1.2'], true);
   
-  final server = await io.serve(handler, _hostname, port,
-      securityContext: serverSecurityContext);
+  // final server = await io.serve(handler, _hostname, port,
+  //     securityContext: serverSecurityContext);
+
+  final server = await HttpServer.bindSecure(
+          _hostname,
+          port,
+          serverSecurityContext,
+          backlog: 0,
+          requestClientCertificate: true,
+        );
+  io.serveRequests(server, handler);
+
   print('Serving at http://${server.address.host}:${server.port}');
   print('registrando webhook');
   // ignore: unawaited_futures
