@@ -59,22 +59,22 @@ void main(List<String> args) async {
       .addMiddleware(shelf.logRequests())
       .addHandler(router);
 
-  final serverSecurityContext = SecurityContext(withTrustedRoots: true);
-  serverSecurityContext.useCertificateChain(
-      '/etc/letsencrypt/live/gerencianetpoc.academiadoflutter.com.br/fullchain.pem');
-  serverSecurityContext.usePrivateKey(
-      '/etc/letsencrypt/live/gerencianetpoc.academiadoflutter.com.br/privkey.pem');
-  // openssl x509 -in pix.prod.crt -out pix.prod.pem -outform PEM
-  serverSecurityContext.setClientAuthorities('$root/bin/pix.prod.crt');
-  // serverSecurityContext.setTrustedCertificates('$root/bin/pix.prod.pem');
-  // serverSecurityContext.setClientAuthorities('$root/bin/pix.prod.pem');
-  serverSecurityContext.setAlpnProtocols(['TLSv1.2'], true);
+  // final serverSecurityContext = SecurityContext(withTrustedRoots: true);
+  // serverSecurityContext.useCertificateChain(
+  //     '/etc/letsencrypt/live/gerencianetpoc.academiadoflutter.com.br/fullchain.pem');
+  // serverSecurityContext.usePrivateKey(
+  //     '/etc/letsencrypt/live/gerencianetpoc.academiadoflutter.com.br/privkey.pem');
+  // // openssl x509 -in pix.prod.crt -out pix.prod.pem -outform PEM
+  // serverSecurityContext.setClientAuthorities('$root/bin/pix.prod.crt');
+  // // serverSecurityContext.setTrustedCertificates('$root/bin/pix.prod.pem');
+  // // serverSecurityContext.setClientAuthorities('$root/bin/pix.prod.pem');
+  // serverSecurityContext.setAlpnProtocols(['TLSv1.2'], true);
 
   final server = await io.serve(
     handler,
     _hostname,
     port,
-    securityContext: serverSecurityContext,
+    // securityContext: serverSecurityContext,
   );
 
   io.serveRequests(server, handler);
