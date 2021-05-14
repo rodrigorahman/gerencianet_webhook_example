@@ -59,12 +59,9 @@ void main(List<String> args) async {
       .addMiddleware(shelf.logRequests())
       .addHandler(router);
 
-  final serverSecurityContext = SecurityContext();
-  // serverSecurityContext.useCertificateChain(
-  //     '/etc/letsencrypt/live/gerencianetpoc.academiadoflutter.com.br/fullchain.pem');
+  final serverSecurityContext = SecurityContext(withTrustedRoots: true);
   serverSecurityContext.useCertificateChain(
-      '$root/bin/pix.prod.pem');
-  
+      '/etc/letsencrypt/live/gerencianetpoc.academiadoflutter.com.br/fullchain.pem');
   serverSecurityContext.usePrivateKey(
       '/etc/letsencrypt/live/gerencianetpoc.academiadoflutter.com.br/privkey.pem');
   // openssl x509 -in pix.prod.crt -out pix.prod.pem -outform PEM
