@@ -34,7 +34,7 @@ void main(List<String> args) async {
     print(request.url.hasAuthority);
     print(await request.readAsString());
     
-    if(request.requestedUri.hasAuthority && request.url.hasAuthority) {
+    if(request.url.hasAuthority) {
       return shelf.Response(401);
     }else {
       return shelf.Response(200);
