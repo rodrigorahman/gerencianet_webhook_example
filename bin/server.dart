@@ -31,6 +31,8 @@ void main(List<String> args) async {
 
     print(request.requestedUri.hasAuthority);
     print(request.headers);
+    print(request.context);
+    print(request.url.hasAuthority);
     print(await request.readAsString());
     if(!request.headers.containsKey('Authorization')) {
       return shelf.Response(401);
