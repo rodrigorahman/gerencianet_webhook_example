@@ -54,12 +54,12 @@ void main(List<String> args) async {
       .addHandler(router);
   
 
-  final serverSecurityContext = SecurityContext();
+  final serverSecurityContext = SecurityContext(withTrustedRoots: true);
   serverSecurityContext.useCertificateChain(
       '/etc/letsencrypt/live/gerencianetpoc.academiadoflutter.com.br/fullchain.pem');
   serverSecurityContext.usePrivateKey(
       '/etc/letsencrypt/live/gerencianetpoc.academiadoflutter.com.br/privkey.pem');
-  serverSecurityContext.setClientAuthorities('$root/bin/chain-pix-prod.crt');
+  serverSecurityContext.setTrustedCertificates('$root/bin/chain-pix-prod.crt');
   
   final server = await io.serve(handler, _hostname, port,
       securityContext: serverSecurityContext);
