@@ -121,6 +121,7 @@ Future<void> registerWebHook() async {
 
 Future<void> registrarWEbHook(Dio dio, String accessToken) async {
   try {
+    print('----------------------- registrarWEbHook ------------------');
     final resp = await dio.put(
       'https://api-pix.gerencianet.com.br/v2​/webhook/ce80b00b-add8-4016-9516-022cce3c8be5',
       data: {
