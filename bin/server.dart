@@ -57,7 +57,7 @@ void main(List<String> args) async {
       .addHandler(router);
   
 
-  final serverSecurityContext = SecurityContext(withTrustedRoots: true);
+  final serverSecurityContext = SecurityContext();
   serverSecurityContext.useCertificateChain(
       '/etc/letsencrypt/live/gerencianetpoc.academiadoflutter.com.br/fullchain.pem');
   serverSecurityContext.usePrivateKey(
