@@ -26,7 +26,15 @@ void main(List<String> args) async {
       .addMiddleware(shelf.logRequests())
       .addHandler(_echoRequest);
 
-  var server = await io.serve(handler, _hostname, port);
+  final serverSecurityContext = SecurityContext();
+  serverSecurityContext.useCertificateChain(
+      '/etc/letsencrypt/live/gerencianetpoc.academiadoflutter.com.br/fullchain.pem');
+  serverSecurityContext.usePrivateKey(
+      '/etc/letsencrypt/live/gerencianetpoc.academiadoflutter.com.br/privkey.pem');
+  // serverSecurityContext.setTrustedCertificates(file)
+  final server = await io.serve(handler, _hostname, port,
+      securityContext: serverSecurityContext);
+
   print('Serving at http://${server.address.host}:${server.port}');
 }
 
