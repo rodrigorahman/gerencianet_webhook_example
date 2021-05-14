@@ -38,6 +38,17 @@ void main(List<String> args) async {
         body: '', headers: {'content-type': 'application/json'});
   });
 
+  router.post('/teste', (shelf.Request request) async {
+    print(request.requestedUri.hasAuthority);
+    print(request.headers);
+    print(request.url.data);
+    print(request.url.hasAuthority);
+    print(await request.readAsString());
+
+    return shelf.Response(200,
+        body: '', headers: {'content-type': 'application/json'});
+  });
+
   router.post('/webhook//pix', (shelf.Request request) async {
     print(request.requestedUri.hasAuthority);
     print(request.headers);
