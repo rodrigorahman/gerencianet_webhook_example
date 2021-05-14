@@ -43,7 +43,7 @@ void main(List<String> args) async {
     print(request.headers);
     print(request.url.data);
     print(request.url.hasAuthority);
-    print(await request.readAsString());
+    print('BODY: ${await request.readAsString()}');
 
     return shelf.Response(200,
         body: '', headers: {'content-type': 'application/json'});
