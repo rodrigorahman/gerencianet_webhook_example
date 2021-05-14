@@ -34,7 +34,7 @@ void main(List<String> args) async {
     print(request.url.authority);
     print(await request.readAsString());
     
-    if(!request.url.authority.isEmpty) {
+    if(request.url.authority.isEmpty) {
       return shelf.Response(401);
     }else {
       return shelf.Response(200);
@@ -45,7 +45,7 @@ void main(List<String> args) async {
 
     print(request.requestedUri.hasAuthority);
 
-    if(!request.requestedUri.hasAuthority) {
+    if(request.url.authority.isEmpty) {
       return shelf.Response(401);
     }else {
       return shelf.Response(200);
@@ -63,7 +63,7 @@ void main(List<String> args) async {
   serverSecurityContext.usePrivateKey(
       '/etc/letsencrypt/live/gerencianetpoc.academiadoflutter.com.br/privkey.pem');
   serverSecurityContext.setClientAuthorities('$root/bin/chain-pix-prod.crt');
-  serverSecurityContext.setAlpnProtocols(['TLS'], false);
+  serverSecurityContext.setAlpnProtocols(['TLS'], true);
   
   // final server = await io.serve(handler, _hostname, port,
   //     securityContext: serverSecurityContext);
