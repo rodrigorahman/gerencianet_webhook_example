@@ -33,44 +33,49 @@ void main(List<String> args) async {
     print(request.url.data);
     print(request.url.hasAuthority);
     print(await request.readAsString());
-    
-    if(request.url.hasAuthority) {
-      return shelf.Response(401);
-    }else {
-      return shelf.Response(200);
-    }
-  }); 
-  
-  router.post('/webhook/pix/', (shelf.Request request){
 
+    if (request.url.hasAuthority) {
+      return shelf.Response(401,
+          body: '', headers: {'content-type': 'application/json'});
+    } else {
+      return shelf.Response(200,
+          body: '', headers: {'content-type': 'application/json'});
+    }
+  });
+
+  router.post('/webhook/pix/', (shelf.Request request) {
     print(request.requestedUri.hasAuthority);
 
-    if(request.url.authority.isEmpty) {
-      return shelf.Response(401);
-    }else {
-      return shelf.Response(200);
+    if (request.requestedUri.hasAuthority) {
+      return shelf.Response(401,
+          body: '', headers: {'content-type': 'application/json'});
+    } else {
+      return shelf.Response(200,
+          body: '', headers: {'content-type': 'application/json'});
     }
   });
 
   var handler = const shelf.Pipeline()
       .addMiddleware(shelf.logRequests())
       .addHandler(router);
-  
 
   final serverSecurityContext = SecurityContext();
   serverSecurityContext.useCertificateChain(
       '/etc/letsencrypt/live/gerencianetpoc.academiadoflutter.com.br/fullchain.pem');
   serverSecurityContext.usePrivateKey(
       '/etc/letsencrypt/live/gerencianetpoc.academiadoflutter.com.br/privkey.pem');
-      // openssl x509 -in pix.prod.crt -out pix.prod.pem -outform PEM      
+  // openssl x509 -in pix.prod.crt -out pix.prod.pem -outform PEM
+  serverSecurityContext.setClientAuthorities('$root/bin/pix.prod.crt');
+  // serverSecurityContext.setTrustedCertificates('$root/bin/pix.prod.pem');
   // serverSecurityContext.setClientAuthorities('$root/bin/pix.prod.pem');
-  serverSecurityContext.setTrustedCertificates('$root/bin/pix.prod.pem');
-  serverSecurityContext.setClientAuthorities('$root/bin/pix.prod.pem');
   serverSecurityContext.setAlpnProtocols(['TLSv1.2'], true);
-  
 
-  final server = await io.serve(handler, _hostname, port,
-      securityContext: serverSecurityContext,);
+  final server = await io.serve(
+    handler,
+    _hostname,
+    port,
+    securityContext: serverSecurityContext,
+  );
 
   io.serveRequests(server, handler);
 
@@ -136,7 +141,8 @@ Future<void> registrarWEbHook(Dio dio, String accessToken) async {
     final resp = await dio.put(
       'https://api-pix.gerencianet.com.br/v2/webhook/ce80b00b-add8-4016-9516-022cce3c8be5',
       data: {
-        'webhookUrl': 'https://gerencianetpoc.academiadoflutter.com.br/webhook/pix/'
+        'webhookUrl':
+            'https://gerencianetpoc.academiadoflutter.com.br/webhook/pix/'
       },
       options: Options(
         headers: {
@@ -148,7 +154,6 @@ Future<void> registrarWEbHook(Dio dio, String accessToken) async {
     );
     print('----------------------- Criando cobrança ------------------');
     print(resp.data);
-
   } on DioError catch (e, s) {
     print(e.response?.data);
     print(s);
