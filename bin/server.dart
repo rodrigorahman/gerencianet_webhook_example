@@ -31,7 +31,7 @@ void main(List<String> args) async {
     print(request.requestedUri.hasAuthority);
     print(request.headers);
     print(request.url.data);
-    print(request.url.authority);
+    print(request.url.hasAuthority);
     print(await request.readAsString());
     
     if(request.requestedUri.hasAuthority && request.url.hasAuthority) {
