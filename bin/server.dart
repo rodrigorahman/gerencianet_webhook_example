@@ -34,7 +34,7 @@ void main(List<String> args) async {
     print(request.context['shelf.io.connection_info']);
     print(request.url.hasAuthority);
     print(await request.readAsString());
-    if(!request.headers.containsKey('Authorization')) {
+    if(!request.requestedUri.hasAuthority) {
       return shelf.Response(401);
     }else {
       return shelf.Response(200);
