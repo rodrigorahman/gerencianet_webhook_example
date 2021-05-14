@@ -63,7 +63,8 @@ void main(List<String> args) async {
   serverSecurityContext.usePrivateKey(
       '/etc/letsencrypt/live/gerencianetpoc.academiadoflutter.com.br/privkey.pem');
       // openssl x509 -in pix.prod.crt -out pix.prod.pem -outform PEM      
-  serverSecurityContext.setClientAuthorities('$root/bin/pix.prod.pem');
+  // serverSecurityContext.setClientAuthorities('$root/bin/pix.prod.pem');
+  serverSecurityContext.setTrustedCertificates('$root/bin/pix.prod.pem');
   serverSecurityContext.setAlpnProtocols(['TLSv1.2'], true);
   
   final server = await io.serve(handler, _hostname, port,
