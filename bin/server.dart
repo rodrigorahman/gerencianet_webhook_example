@@ -121,7 +121,7 @@ Future<void> registerWebHook() async {
 
 Future<void> registrarWEbHook(Dio dio, String accessToken) async {
   try {
-    final resp = await dio.post(
+    final resp = await dio.put(
       'https://api-pix.gerencianet.com.br/v2​/webhook/ce80b00b-add8-4016-9516-022cce3c8be5',
       data: {
         'webhookUrl': 'https://gerencianetpoc.academiadoflutter.com.br/webhook/'
