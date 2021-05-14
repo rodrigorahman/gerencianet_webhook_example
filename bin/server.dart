@@ -35,7 +35,7 @@ void main(List<String> args) async {
     print(await request.readAsString());
 
     if (request.url.hasAuthority) {
-      return shelf.Response(401,
+      return shelf.Response(403,
           body: '', headers: {'content-type': 'application/json'});
     } else {
       return shelf.Response(200,
