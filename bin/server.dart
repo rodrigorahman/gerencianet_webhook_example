@@ -34,7 +34,7 @@ void main(List<String> args) async {
     print(request.url.authority);
     print(await request.readAsString());
     
-    if(request.url.authority.isEmpty) {
+    if(request.requestedUri.authority.isEmpty) {
       return shelf.Response(401);
     }else {
       return shelf.Response(200);
