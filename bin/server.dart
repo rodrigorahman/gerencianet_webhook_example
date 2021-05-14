@@ -27,7 +27,7 @@ void main(List<String> args) async {
   }
 
   var router = Router();
-  router.post('/webhook/', (shelf.Request request) async {
+  router.post('/gerencianet/webhook', (shelf.Request request) async {
     print(request.requestedUri.hasAuthority);
     print(request.headers);
     print(request.url.data);
@@ -49,7 +49,7 @@ void main(List<String> args) async {
         body: '', headers: {'content-type': 'application/json'});
   });
 
-  router.post('/webhook//pix', (shelf.Request request) async {
+  router.post('/gerencianet/webhook/pix', (shelf.Request request) async {
     print(request.requestedUri.hasAuthority);
     print(request.headers);
     print(request.url.data);
@@ -146,7 +146,7 @@ Future<void> registrarWEbHook(Dio dio, String accessToken) async {
     final resp = await dio.put(
       'https://api-pix.gerencianet.com.br/v2/webhook/ce80b00b-add8-4016-9516-022cce3c8be5',
       data: {
-        'webhookUrl': 'https://gerencianetpoc.academiadoflutter.com.br/webhook'
+        'webhookUrl': 'https://gerencianetpoc.academiadoflutter.com.br/gerencianet/webhook'
       },
       options: Options(
         headers: {
