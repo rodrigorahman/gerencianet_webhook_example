@@ -34,13 +34,8 @@ void main(List<String> args) async {
     print(request.url.hasAuthority);
     print(await request.readAsString());
 
-    if (!request.url.hasAuthority) {
-      return shelf.Response(403,
-          body: '', headers: {'content-type': 'application/json'});
-    } else {
-      return shelf.Response(200,
-          body: '', headers: {'content-type': 'application/json'});
-    }
+    return shelf.Response(200,
+        body: '', headers: {'content-type': 'application/json'});
   });
 
   router.post('/webhook/pix/', (shelf.Request request) {
@@ -141,8 +136,7 @@ Future<void> registrarWEbHook(Dio dio, String accessToken) async {
     final resp = await dio.put(
       'https://api-pix.gerencianet.com.br/v2/webhook/ce80b00b-add8-4016-9516-022cce3c8be5',
       data: {
-        'webhookUrl':
-            'https://gerencianetpoc.academiadoflutter.com.br/webhook/'
+        'webhookUrl': 'https://gerencianetpoc.academiadoflutter.com.br/webhook/'
       },
       options: Options(
         headers: {
