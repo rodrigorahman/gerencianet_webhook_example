@@ -30,7 +30,7 @@ void main(List<String> args) async {
   router.post('/webhook/', (shelf.Request request){
 
     print(request.requestedUri.hasAuthority);
-
+    print(request.headers);
     if(!request.requestedUri.hasAuthority) {
       return shelf.Response(401);
     }else {
