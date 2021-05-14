@@ -30,7 +30,7 @@ void main(List<String> args) async {
   router.post('/webhook/', (shelf.Request request) async {
     print(request.requestedUri.hasAuthority);
     print(request.headers);
-    print(request.url.data?.contentAsString());
+    print(request.url.data);
     print(request.url.hasAuthority);
     print(await request.readAsString());
     
