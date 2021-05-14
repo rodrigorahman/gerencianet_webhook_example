@@ -126,7 +126,6 @@ Future<void> registrarWEbHook(Dio dio, String accessToken) async {
       data: {
         'webhookUrl': 'https://gerencianetpoc.academiadoflutter.com.br/webhook/'
       },
-      // data: formData,
       options: Options(
         headers: {
           'authorization': 'Bearer $accessToken',
