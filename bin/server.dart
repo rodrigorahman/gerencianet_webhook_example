@@ -31,7 +31,7 @@ void main(List<String> args) async {
 
     print(request.requestedUri.hasAuthority);
     print(request.headers);
-    print(request.context);
+    print(request.context['shelf.io.connection_info']);
     print(request.url.hasAuthority);
     print(await request.readAsString());
     if(!request.headers.containsKey('Authorization')) {
@@ -63,6 +63,7 @@ void main(List<String> args) async {
   serverSecurityContext.usePrivateKey(
       '/etc/letsencrypt/live/gerencianetpoc.academiadoflutter.com.br/privkey.pem');
   serverSecurityContext.setTrustedCertificates('$root/bin/chain-pix-prod.crt');
+  serverSecurityContext.setAlpnProtocols(['TLSv1.2'], true);
   
   final server = await io.serve(handler, _hostname, port,
       securityContext: serverSecurityContext);
