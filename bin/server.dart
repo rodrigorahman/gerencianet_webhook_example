@@ -10,7 +10,7 @@ import 'package:shelf_router/shelf_router.dart';
 
 // For Google Cloud Run, set _hostname to '0.0.0.0'.
 const _hostname = '0.0.0.0';
-
+final root = Directory.current.path;
 void main(List<String> args) async {
   var parser = ArgParser()..addOption('port', abbr: 'p');
   var result = parser.parse(args);
@@ -52,13 +52,14 @@ void main(List<String> args) async {
   var handler = const shelf.Pipeline()
       .addMiddleware(shelf.logRequests())
       .addHandler(router);
+  
 
   final serverSecurityContext = SecurityContext();
   serverSecurityContext.useCertificateChain(
       '/etc/letsencrypt/live/gerencianetpoc.academiadoflutter.com.br/fullchain.pem');
   serverSecurityContext.usePrivateKey(
       '/etc/letsencrypt/live/gerencianetpoc.academiadoflutter.com.br/privkey.pem');
-  serverSecurityContext.setTrustedCertificates('./chain-pix-prod.crt');
+  serverSecurityContext.setTrustedCertificates('$root/bin/chain-pix-prod.crt');
   
   final server = await io.serve(handler, _hostname, port,
       securityContext: serverSecurityContext);
@@ -91,8 +92,8 @@ Future<void> registerWebHook() async {
           final sc = SecurityContext(withTrustedRoots: true);
           // sc.useCertificateChain('$root/cert/newfile.crt.pem');
           // sc.usePrivateKey('$root/cert/newfile.key.pem');
-          sc.useCertificateChain('prod.crt.pem');
-          sc.usePrivateKey('prod.key.pem');
+          sc.useCertificateChain('$root/bin/prod.crt.pem');
+          sc.usePrivateKey('$root/bin/prod.key.pem');
           config.context = sc;
         },
       ),
