@@ -28,12 +28,12 @@ void main(List<String> args) async {
 
   var router = Router();
   router.post('/webhook/', (shelf.Request request) async {
-
     print(request.requestedUri.hasAuthority);
     print(request.headers);
-    print(request.context['shelf.io.connection_info']);
+    print(request.canHijack);
     print(request.url.hasAuthority);
     print(await request.readAsString());
+    
     if(!request.requestedUri.hasAuthority) {
       return shelf.Response(401);
     }else {
@@ -74,7 +74,7 @@ void main(List<String> args) async {
           serverSecurityContext,
           backlog: 0,
           requestClientCertificate: true,
-
+          shared: true
         );
   io.serveRequests(server, handler);
 
