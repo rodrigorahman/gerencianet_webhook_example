@@ -58,27 +58,17 @@ void main(List<String> args) async {
   
 
   final serverSecurityContext = SecurityContext(withTrustedRoots: true);
-  // serverSecurityContext.useCertificateChain(
-  //     '/etc/letsencrypt/live/gerencianetpoc.academiadoflutter.com.br/fullchain.pem');
   serverSecurityContext.useCertificateChain(
-      '$root/bin/pix.prod.crt');
+      '/etc/letsencrypt/live/gerencianetpoc.academiadoflutter.com.br/fullchain.pem');
   serverSecurityContext.usePrivateKey(
       '/etc/letsencrypt/live/gerencianetpoc.academiadoflutter.com.br/privkey.pem');
-  // serverSecurityContext.setTrustedCertificates('$root/bin/pix.prod.crt');
-  serverSecurityContext.setTrustedCertificates('/etc/letsencrypt/live/gerencianetpoc.academiadoflutter.com.br/fullchain.pem');
+      // openssl x509 -in pix.prod.crt -out pix.prod.pem -outform PEM      
+  serverSecurityContext.setClientAuthorities('$root/bin/pix.prod.pem');
   serverSecurityContext.setAlpnProtocols(['TLSv1.2'], true);
   
-  // final server = await io.serve(handler, _hostname, port,
-  //     securityContext: serverSecurityContext);
+  final server = await io.serve(handler, _hostname, port,
+      securityContext: serverSecurityContext);
 
-  final server = await HttpServer.bindSecure(
-          _hostname,
-          port,
-          serverSecurityContext,
-          backlog: 0,
-          requestClientCertificate: true,
-          shared: true
-        );
   io.serveRequests(server, handler);
 
   print('Serving at http://${server.address.host}:${server.port}');
